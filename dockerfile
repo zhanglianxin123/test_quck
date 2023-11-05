@@ -1,7 +1,7 @@
 FROM golang:1.18 as builder
 COPY / /app
 WORKDIR /app
-ENV GO111MODULE=on GOPROXY="https://mirrors.aliyun.com/goproxy/,directt"  CGO_ENABLED=0 GOSUMDB=off GOOS=linux
+ENV GO111MODULE=on GOPROXY="https://goproxy.cn,direct"  CGO_ENABLED=0 GOSUMDB=off GOOS=linux
 RUN go mod tidy
 RUN go build -a -o /go/bin/test_quck .
 
