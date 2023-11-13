@@ -10,4 +10,3 @@ RUN go build -a -o /go/bin/test_quck .
 FROM alpine:3.15
 EXPOSE 8888
 COPY --from=builder /go/bin/test_quck .
-CMD ["/test_quck","web"]
