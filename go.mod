@@ -4,6 +4,7 @@ go 1.18
 
 require (
 	github.com/cloudwego/hertz v0.7.1
+	github.com/hertz-contrib/logger/accesslog v0.0.0-20231023044348-d2083b79d6d8
 	github.com/urfave/cli/v2 v2.25.7
 )
 

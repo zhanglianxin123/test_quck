@@ -5,7 +5,9 @@ package main
 import (
 	"github.com/cloudwego/hertz/pkg/app/server"
 	"github.com/cloudwego/hertz/pkg/common/hlog"
+	"github.com/hertz-contrib/logger/accesslog"
 	"github.com/urfave/cli/v2"
+	"io"
 	"os"
 )
 
@@ -27,10 +29,14 @@ func main() {
 					panic(err)
 				}
 				defer f.Close()
-				hlog.SetOutput(f)
+				fileWriter := io.MultiWriter(f, os.Stdout)
+				hlog.SetOutput(fileWriter)
+				hlog.SetLevel(hlog.LevelDebug)
+				//hlog.SetOutput(f)
 				h := server.Default(
 				//server.WithHostPorts(config.Config.Port),
 				)
+				h.Use(accesslog.New(accesslog.WithFormat("[${time}] ${status} - ${latency} ${method} ${path} ${queryParams}")))
 				register(h)
 				h.Spin()
 				return nil
